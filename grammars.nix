@@ -13,7 +13,6 @@
     ${yj}/bin/yj -t < ${./languages.toml} > $out
   '';
   languagesConfig =
-    if lib.versionAtLeast builtins.nixVersion "2.6.0"
     then builtins.fromTOML (builtins.readFile ./languages.toml)
     else builtins.fromJSON (builtins.readFile (builtins.toPath languages-json));
   isGitGrammar = grammar:
@@ -55,7 +54,6 @@
       version = grammar.source.rev;
 
       src =
-        if builtins.hasAttr "subpath" grammar.source
         then "${source}/${grammar.source.subpath}"
         else source;
 
